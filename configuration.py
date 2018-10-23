@@ -1,5 +1,6 @@
 import os
 import csv
+import logging
 
 configs={
     'scriptpath': '~/canlogger',
@@ -31,3 +32,4 @@ for name in configs:
     if  name in os.environ:
         configs[name] = os.getenv(name)
 
+logging.warning(configs)

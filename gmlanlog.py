@@ -10,15 +10,14 @@ import queue
 import can4python as can
 import paho.mqtt.publish as publish
 
-from pynbp import *
-
 from configuration import *
+from pynbp import *
 
 can_interface=configs['canbus']
 
-bus = can.CanBus.from_kcd_file(configs['kcd'], 
-    can_interface, 
-    timeout=configs['nocan_timeout'])
+bus = can.CanBus.from_kcd_file(configs['kcd'],
+    can_interface,
+    timeout=int(configs['nocan_timeout']))
 
 mqttqueue=queue.Queue()
 nbpqueue=queue.Queue()
@@ -80,7 +79,7 @@ if __name__ == '__main__':
                     statestart = datetime.datetime.now()
                 if not run and received_signalvalues['system_power_mode'] == 3:
                     run = True
-                if run and not state and datetime.datetime.now()-statestart > datetime.timedelta(seconds=configs['poweroff_timer']):
+                if run and not state and datetime.datetime.now()-statestart > datetime.timedelta(seconds=int(configs['poweroff_timer'])):
                     logging.warning('Engine off powerdown.')
                     exit(0)
 

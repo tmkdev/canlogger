@@ -1,6 +1,6 @@
 #!/bin/bash
+export configfile=$1
 . ${configfile}
-
 . ${pythonenv}/bin/activate
 
 cd ${scriptpath}
@@ -31,6 +31,7 @@ if mount | grep /media/usb0 > /dev/null; then
     echo "Mount detected. Syncing logs"
     sudo mkdir /media/usb0/logs
     sudo rsync -r /home/pi/logs/ /media/usb0/logs
+    echo "Log sync complete"
 else
     echo "No usb detected. Exiting to poweroff"
 fi

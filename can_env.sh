@@ -5,8 +5,6 @@ export scriptpath=$HOME/canlogger
 export configpath=$HOME/canlogger/configs
 
 export logdir=$HOME/logs
-export poweroff_timer=30
-export nocan_timeout=30
 export kcd=$configpath/gm_global_a_hs.kcd
 export canbus=can0
 
