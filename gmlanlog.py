@@ -12,45 +12,24 @@ import paho.mqtt.publish as publish
 
 from pynbp import *
 
-poweroff_timer = 30
-nocan_timeout=60
+from configuration import *
 
-nbp_kpis = {'tcs_active': None,
-    'transmission_commanded_gear': None,
-    'vehicle_dynamics_yaw_rate': 'Deg',
-    'vdcs_over_understeer': None,
-    'vdcs_active': None,
-    'abs_active': None,
-    'vehicle_stability_lateral_acceleration': 'g',
-    'steering_wheel_angle': 'Deg',
-    'accelerator_actual_position': '%',
-    'boost_pressure_indication': '%',
-    'platform_brake_position': '%',
-    }
+can_interface=configs['canbus']
 
-
-can_interface=os.getenv('canbus', 'can0')
-kcd=os.getenv('kcd', '/home/pi/gm_global_a_hs.kcd')
-
-bus = can.CanBus.from_kcd_file(kcd, can_interface, timeout=nocan_timeout)
-
-statestart=datetime.datetime.now()
-state = None
-
-run = False
+bus = can.CanBus.from_kcd_file(configs['kcd'], 
+    can_interface, 
+    timeout=configs['nocan_timeout'])
 
 mqttqueue=queue.Queue()
 nbpqueue=queue.Queue()
-
-mypynbp = PyNBP(device='/dev/rfcomm0', nbpqueue=nbpqueue)
-mypynbp.daemon = True
-mypynbp.start()
 
 def send_nbp(received_signalvalues):
     nbp_packet = []
     for sig in received_signalvalues:
         if sig in nbp_kpis:
-            nbp_packet.append(NbpKPI(name=sig, unit=nbp_kpis[sig], value=received_signalvalues[sig]))
+            nbp_packet.append(NbpKPI(name=sig, 
+                                        unit=nbp_kpis[sig], 
+                                        value=received_signalvalues[sig]))
 
     if nbp_packet:
         nbpqueue.put(nbp_packet)
@@ -62,32 +41,47 @@ def send_mqtt(canqueue):
         msgs=[{'topic': "candata/{0}".format(key), 'payload': value} for key, value in data.items()]
         publish.multiple(msgs, hostname="localhost")
 
-t = threading.Thread(target=send_mqtt, args=(mqttqueue, ),  daemon=True)
-t.start()
 
-while True:
-    try:
-        received_signalvalues = bus.recv_next_signals()
-    except:
-        logging.warning('No packets for timeout secs.. Exiting.')
-        break
+if __name__ == '__main__':
+    statestart=datetime.datetime.now()
+    state = None
+    run = False
 
-    if received_signalvalues:
-        received_signalvalues['timestamp'] = time.time()
-        mqttqueue.put(received_signalvalues)
-        send_nbp(received_signalvalues)
+    if configs['nbp_enable']:
+        logging.warning('Starting nbp server')
+        mypynbp = PyNBP(device=configs['serial'], nbpqueue=nbpqueue)
+        mypynbp.daemon = True
+        mypynbp.start()
 
-        print(json.dumps(received_signalvalues))
+    if configs['mqtt_enable']:
+        logging.warning('Enabling MQTT output')
+        t = threading.Thread(target=send_mqtt, args=(mqttqueue, ),  daemon=True)
+        t.start()
 
-        if 'system_power_mode' in received_signalvalues:
-            if state != received_signalvalues['system_power_mode']:
-                state = received_signalvalues['system_power_mode']
-                statestart = datetime.datetime.now()
-            if not run and received_signalvalues['system_power_mode'] == 3:
-                run = True
-            if run and not state and  datetime.datetime.now()-statestart > datetime.timedelta(seconds=poweroff_timer):
-                logging.warning('Shutdown!!')
-                exit(0)
+    while True:
+        try:
+            received_signalvalues = bus.recv_next_signals()
+        except:
+            logging.warning('No packets for timeout secs.. Exiting.')
+            break
 
-            logging.warning('Power state {0} for {1}. Run = {2}'.format(state, datetime.datetime.now()-statestart, run))
+        if received_signalvalues:
+            received_signalvalues['timestamp'] = time.time()
+            if configs['mqtt_enable']:
+                mqttqueue.put(received_signalvalues)
+            if configs['nbp_enable']:
+                send_nbp(received_signalvalues)
 
+            print(json.dumps(received_signalvalues))
+
+            if 'system_power_mode' in received_signalvalues:
+                if state != received_signalvalues['system_power_mode']:
+                    state = received_signalvalues['system_power_mode']
+                    statestart = datetime.datetime.now()
+                if not run and received_signalvalues['system_power_mode'] == 3:
+                    run = True
+                if run and not state and datetime.datetime.now()-statestart > datetime.timedelta(seconds=configs['poweroff_timer']):
+                    logging.warning('Engine off powerdown.')
+                    exit(0)
+
+                logging.warning('Power state {0} for {1}. Run = {2}'.format(state, datetime.datetime.now()-statestart, run))

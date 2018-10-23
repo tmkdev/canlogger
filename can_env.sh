@@ -11,9 +11,8 @@ export kcd=$configpath/gm_global_a_hs.kcd
 export canbus=can0
 
 #Enable mqtt output
-export mqtt=1
+export mqtt_enable=1
 
 #Enable nbp output
-export nbp=1
-export nbp_csv=$configpath/gmlan_hs_nbp.nbp_csv
+export nbp_enable=1
 export serial=/dev/rfcomm0
