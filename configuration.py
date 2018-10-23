@@ -6,8 +6,8 @@ configs={
     'scriptpath': '~/canlogger',
     'configpath': '~/canlogger/configs',
     'logdir': '~/logs',
-    'poweroff_timer': 30, 
-    'nocan_timeout': 30,
+    'poweroff_timer': 45,
+    'nocan_timeout': 45,
     'kcd': '~/canlogger/configs/gm_global_a_hs.kcd',
     'canbus': 'can0',
     'mqtt_enable': 0,
@@ -15,7 +15,8 @@ configs={
     'serial': '/dev/rfcomm0'
 }
 
-nbp_kpis = {'tcs_active': None,
+nbp_kpis = {
+    'tcs_active': None,
     'transmission_commanded_gear': None,
     'vehicle_dynamics_yaw_rate': 'Deg',
     'vdcs_over_understeer': None,
@@ -26,6 +27,7 @@ nbp_kpis = {'tcs_active': None,
     'accelerator_actual_position': '%',
     'boost_pressure_indication': '%',
     'platform_brake_position': '%',
+    'engine_speed': 'RPM',
     }
 
 for name in configs:
