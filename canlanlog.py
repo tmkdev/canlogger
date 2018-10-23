@@ -26,12 +26,12 @@ def send_nbp(received_signalvalues):
     nbp_packet = []
     for sig in received_signalvalues:
         if sig in nbp_kpis:
-            nbp_packet.append(NbpKPI(name=sig, 
-                                        unit=nbp_kpis[sig], 
+            nbp_packet.append(NbpKPI(name=sig,
+                                        unit=nbp_kpis[sig],
                                         value=received_signalvalues[sig]))
 
     if nbp_packet:
-        nbpqueue.put(nbp_packet)
+        nbpqueue.put((nbp_packet, 'UPDATE'))
 
 def send_mqtt(canqueue):
     logging.warning('Starting mqtt_sender')

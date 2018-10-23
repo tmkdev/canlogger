@@ -17,7 +17,7 @@ echo "LogID: ${timestamp} CANBUS: ${canbus}"
 /usr/bin/candump -L ${canbus} | gzip -c > ${logdir}/rawlog_${timestamp}.candump.gz &
 python ${scriptpath}/gpslogger.py | gzip -c > ${logdir}/gps_${timestamp}.json.gz &
 
-python ${scriptpath}/gmlanlog.py | gzip -c > ${logdir}/gmlan_${timestamp}.json.gz
+python ${scriptpath}/canlanlog.py | gzip -c > ${logdir}/gmlan_${timestamp}.json.gz
 
 echo "Detected system powerdown or canbus activity timeout. Powering off."
 date
