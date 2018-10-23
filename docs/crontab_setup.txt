@@ -1,0 +1,4 @@
+Set the canogger to load on boot:
+
+@reboot /bin/bash /home/pi/canlogger/canlogger.sh > /home/pi/canlogger.log 2>&1 &
+
