@@ -30,6 +30,22 @@ nbp_kpis = {
     'engine_speed': 'RPM',
     }
 
+transmission_gear_map = {
+    0: -2,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
+    6: 6,
+    7: 7,
+    8: 8,
+    12: 1,
+    13: 0,
+    14: -1,
+    15: 0,
+}
+
 for name in configs:
     if  name in os.environ:
         configs[name] = os.getenv(name)
