@@ -1,26 +1,23 @@
 #!/bin/bash
-. $HOME/candy/bin/activate
+. ${configfile}
 
-export scriptpath=$HOME/canlogger/
-export kcd=/home/pi/gm_global_a_hs.kcd
+. ${pythonenv}/bin/activate
 
-cd $scriptpath
+cd ${scriptpath}
 
 which python
 
-python $scriptpath/gpstime3.py
-python $scriptpath/gpio_check.py || exit 1
+python ${scriptpath}/gpstime3.py
+python ${scriptpath}/gpio_check.py || exit 1
 
 export timestamp=`date +%Y%m%d%H%M%S`
-export canbus=can0
-export kcd=/home/pi/gm_global_a_hs.kcd
 
-echo $timestamp $canbus
+echo "LogID: ${timestamp} CANBUS: ${canbus}"
 
-/usr/bin/candump -L ${canbus} | gzip -c > $HOME/logs/rawlog_${timestamp}.candump.gz &
-python  $scriptpath/gpslogger.py | gzip -c > $HOME/logs/gps_${timestamp}.json.gz &
+/usr/bin/candump -L ${canbus} | gzip -c > ${logdir}/rawlog_${timestamp}.candump.gz &
+python ${scriptpath}/gpslogger.py | gzip -c > ${logdir}/gps_${timestamp}.json.gz &
 
-python $scriptpath/gmlanlog.py | gzip -c > $HOME/logs/gmlan_${timestamp}.json.gz
+python ${scriptpath}/gmlanlog.py | gzip -c > ${logdir}/gmlan_${timestamp}.json.gz
 
 echo "Detected system powerdown or canbus activity timeout. Powering off."
 date
