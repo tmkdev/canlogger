@@ -1,0 +1,5 @@
+Setting up wifi for MQTT server. (Optional)
+
+I use Ethernet for connecting to the server - and Wifi in car for data realtime to MQTT clients on my phone. Phone connects to a AP serverd via the Pi.
+
+

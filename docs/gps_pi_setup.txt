@@ -1,0 +1,15 @@
+Using USB GPS:
+
+Install GPSD. 
+sudo apt-get install gpsd
+
+Optionally install the gpsd-clients (I don't - they need a bunch of X11 stuff and I'm running headless)
+
+configure /etc/defaults/gpsd to match your GPS.
+IE:
+
+DEVICES="/dev/ttyUSB0" 
+
+systemctl enable gpsd 
+
+

@@ -1,0 +1,34 @@
+Install mosquitto
+
+sudo apt-get install mosquitto mosquitto-clients
+
+Set up mosquitto for no persistence - data is really just for real time consumption:
+
+Edit:
+/etc/mosquitto/mosquitto.conf
+
+# Place your local configuration in /etc/mosquitto/conf.d/
+#
+# A full description of the configuration file is at
+# /usr/share/doc/mosquitto/examples/mosquitto.conf.example
+
+pid_file /var/run/mosquitto.pid
+
+persistence false
+persistence_location /var/lib/mosquitto/
+
+connection_messages false
+
+log_type error
+log_type warning
+
+log_dest file /var/log/mosquitto/mosquitto.log
+
+include_dir /etc/mosquitto/conf.d
+
+-----
+enable the server
+
+systemctl enable mosquitto
+systemctl start mosquitto
+

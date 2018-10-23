@@ -1,0 +1,37 @@
+For Canhats (MCP2515 based cans):
+
+Enable SPI via raspi-config
+
+Configs for /boot/config.txt:
+dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=8000000,interrupt=25,spimaxfrequency=1000000
+
+You may need to change interrupt or oscillator freq depending on your canbus hat. 
+
+add vcan to /etc/modules (Optional - only if you want a virtual canbus)
+
+Install canbus-utils:
+sudo apt-get install canbus-utils
+
+Add Configs for auto up-ing the canbuses.
+/etc/network/interfaces.d/can0 
+
+auto can0
+iface can0 inet manual
+        pre-up ip link set $IFACE type can bitrate 500000 listen-only off
+        #pre-up /sbin/ip link set $IFACE type can bitrate 500000 triple-sampling on
+        up /sbin/ifconfig $IFACE up
+        down /sbin/ifconfig $IFACE down
+
+
+/etc/network/interfaces.d/vcan0 
+auto vcan0
+   iface vcan0 inet manual
+   pre-up /sbin/ip link add dev $IFACE type vcan
+   up /sbin/ifconfig $IFACE up
+
+
+Reboot.
+
+
+
