@@ -30,8 +30,9 @@ def send_nbp(received_signalvalues):
                                         unit=nbp_kpis[sig],
                                         value=received_signalvalues[sig]))
 
+    # Send ALL updates - min_interval will keep updates to 0.2s
     if nbp_packet:
-        nbpqueue.put((nbp_packet, 'UPDATE'))
+        nbpqueue.put((nbp_packet, 'ALL'))
 
 def send_mqtt(canqueue):
     logging.warning('Starting mqtt_sender')
