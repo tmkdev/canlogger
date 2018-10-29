@@ -6,7 +6,7 @@ configs={
     'scriptpath': '~/canlogger',
     'configpath': '~/canlogger/configs',
     'logdir': '~/logs',
-    'poweroff_timer': 45,
+    'poweroff_timer': 10,
     'nocan_timeout': 45,
     'kcd': '~/canlogger/configs/gm_global_a_hs.kcd',
     'canbus': 'can0',

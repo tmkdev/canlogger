@@ -80,8 +80,8 @@ if __name__ == '__main__':
                     statestart = datetime.datetime.now()
                 if not run and received_signalvalues['system_power_mode'] == 3:
                     run = True
-                if run and not state and datetime.datetime.now()-statestart > datetime.timedelta(seconds=int(configs['poweroff_timer'])):
-                    logging.warning('Engine off powerdown.')
+                if run and not state and datetime.datetime.now() - statestart > datetime.timedelta(seconds=int(configs['poweroff_timer'])):
+                    logging.warning('System off powerdown.')
                     exit(0)
 
                 logging.warning('Power state {0} for {1}. Run = {2}'.format(state, datetime.datetime.now()-statestart, run))
