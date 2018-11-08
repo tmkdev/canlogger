@@ -32,7 +32,9 @@ def send_nbp(received_signalvalues):
 
     # Send ALL updates - min_interval will keep updates to 0.2s
     if nbp_packet:
-        nbpqueue.put((nbp_packet, 'ALL'))
+        nbpqueue.put(NbpPayload(timestamp=received_signalvalues['timestamp'],
+                     packettype='UPDATE',
+                     nbpkpilist=nbp_packet))
 
 def send_mqtt(canqueue):
     logging.warning('Starting mqtt_sender')
@@ -49,7 +51,7 @@ if __name__ == '__main__':
 
     if configs['nbp_enable']:
         logging.warning('Starting nbp server')
-        mypynbp = PyNBP(device=configs['serial'], nbpqueue=nbpqueue)
+        mypynbp = PyNBP(device=configs['serial'], nbpqueue=nbpqueue, min_update_status=0.05)
         mypynbp.daemon = True
         mypynbp.start()
 
