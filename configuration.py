@@ -7,7 +7,7 @@ configs={
     'configpath': '~/canlogger/configs',
     'logdir': '~/logs',
     'poweroff_timer': 10,
-    'nocan_timeout': 45,
+    'nocan_timeout': 30,
     'kcd': '~/canlogger/configs/gm_global_a_hs.kcd',
     'canbus': 'can0',
     'mqtt_enable': 0,
