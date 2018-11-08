@@ -41,6 +41,8 @@ else
     echo "No usb detected. Exiting to poweroff"
 fi
 
+mv /home/canlogger.log /home/canlogger.last
+
 # Wait for all IO.
 sync; sleep 1
 sync; sleep 1
