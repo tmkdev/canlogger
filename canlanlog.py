@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     if configs['nbp_enable']:
         logging.warning('Starting nbp server')
-        mypynbp = PyNBP(device=configs['serial'], nbpqueue=nbpqueue, min_update_status=0.05)
+        mypynbp = PyNBP(device=configs['serial'], nbpqueue=nbpqueue, min_update_interval=0.05)
         mypynbp.daemon = True
         mypynbp.start()
 
