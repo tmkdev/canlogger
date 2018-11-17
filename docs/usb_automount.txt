@@ -1,1 +1,14 @@
 USB Automount for log backups. 
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=205016
+
+1. Install the package:
+Code: Select all
+
+sudo apt-get install usbmount
+2. Make sure it works in Stretch by changing MountFlags=slave to MountFlags=shared here:
+Code: Select all
+
+sudo nano /lib/systemd/system/systemd-udevd.service
+3. Reboot and it works!
+
