@@ -43,7 +43,8 @@ else
     echo "No usb detected. Exiting to poweroff"
 fi
 
-mv /home/canlogger.log /home/canlogger.last
+cp /home/pi/canlogger.log /home/pi/logs/canlogger_${timestamp}.log
+cp /home/pi/pynbp.log /home/pi/logs/pynbp_${timestamp}.log
 
 # Wait for all IO.
 sync; sleep 1
