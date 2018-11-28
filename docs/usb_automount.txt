@@ -10,5 +10,10 @@ sudo apt-get install usbmount
 Code: Select all
 
 sudo nano /lib/systemd/system/systemd-udevd.service
+
+2a. Edit /etc/usbmount/usbmount.conf
+-> Allows pi user to write.. 
+MOUNTOPTIONS="noexec,nodev,noatime,nodiratime,uid=pi,gid=pi"
+
 3. Reboot and it works!
 

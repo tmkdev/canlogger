@@ -33,10 +33,10 @@ find /home/pi/logs/ -type f -size -40c -delete
 if mount | grep /media/usb0 > /dev/null; then
     echo "Mount detected. Syncing logs"
     date
-    sudo mkdir /media/usb0/logs
-    sudo rsync -r /home/pi/logs/ /media/usb0/logs
+    mkdir /media/usb0/logs
+    rsync -r /home/pi/logs/ /media/usb0/logs
 
-    sudo find /media/usb0/logs/ -type f -size -40c -delete
+    find /media/usb0/logs/ -type f -size -40c -delete
     echo "Log sync complete"
     date
 else

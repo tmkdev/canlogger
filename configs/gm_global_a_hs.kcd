@@ -79,8 +79,8 @@
       <Signal name="requested_gear" offset="16" length="4" endianess="big">
          <Notes>ReqGear</Notes>
       </Signal>
-      <Signal name="abs_active" offset="29" length="1"/>
-      <Signal name="tcs_active" offset="27" length="1"/>
+      <Signal name="abs_active" offset="30" length="1"/>
+      <Signal name="tcs_active" offset="28" length="1"/>
       <Signal name="vdcs_active" offset="24" length="1"/>
       <Signal name="vdcs_yaw_rate_valid" offset="40" length="12"/>
       <Signal name="vehicle_dynamics_yaw_rate" offset="40" length="12" endianess="big">
