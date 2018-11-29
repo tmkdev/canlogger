@@ -62,6 +62,29 @@
       </Signal>
     </Message>
 
+    <Message id="0x1c3" length="5" name="PPEI Engine Torque Status 2">
+      <Producer>
+        <NodeRef id="1"/>
+      </Producer>
+      <Signal name="engine_torque_actual_ex" offset="8" length="12">
+         <Value type="unsigned" slope="0.5" intercept="-848" unit="Nm" min="-848" max="1199.5"/>
+      </Signal>
+      <Signal name="engine_torque_driver_req_ex" offset="24" length="12">
+         <Value type="unsigned" slope="0.5" intercept="-848" unit="Nm" min="-848" max="1199.5"/>
+      </Signal>
+    </Message>
+
+    <Message id="0x2c3" length="6" name="PPEI Engine Torque Status 3">
+      <Producer>
+        <NodeRef id="1"/>
+      </Producer>
+      <Signal name="engine_torque_max_ex" offset="8" length="12">
+         <Value type="unsigned" slope="0.5" intercept="-848" unit="Nm" min="-848" max="1199.5"/>
+      </Signal>
+      <Signal name="engine_torque_min_ex" offset="24" length="12">
+         <Value type="unsigned" slope="0.5" intercept="-848" unit="Nm" min="-848" max="1199.5"/>
+      </Signal>
+    </Message>
 
     <Message id="0x1e9" length="8" name="PPEI Chassis General Status 1">
       <Producer>
