@@ -66,10 +66,10 @@
       <Producer>
         <NodeRef id="1"/>
       </Producer>
-      <Signal name="engine_torque_actual_ex" offset="8" length="12">
+      <Signal name="engine_torque_actual_ex" offset="8" length="12" endianess="big">
          <Value type="unsigned" slope="0.5" intercept="-848" unit="Nm" min="-848" max="1199.5"/>
       </Signal>
-      <Signal name="engine_torque_driver_req_ex" offset="24" length="12">
+      <Signal name="engine_torque_driver_req_ex" offset="24" length="12" endianess="big">
          <Value type="unsigned" slope="0.5" intercept="-848" unit="Nm" min="-848" max="1199.5"/>
       </Signal>
     </Message>
@@ -78,10 +78,10 @@
       <Producer>
         <NodeRef id="1"/>
       </Producer>
-      <Signal name="engine_torque_max_ex" offset="8" length="12">
+      <Signal name="engine_torque_max_ex" offset="8" length="12" endianess="big">
          <Value type="unsigned" slope="0.5" intercept="-848" unit="Nm" min="-848" max="1199.5"/>
       </Signal>
-      <Signal name="engine_torque_min_ex" offset="24" length="12">
+      <Signal name="engine_torque_min_ex" offset="24" length="12" endianess="big">
          <Value type="unsigned" slope="0.5" intercept="-848" unit="Nm" min="-848" max="1199.5"/>
       </Signal>
     </Message>
@@ -105,7 +105,7 @@
       <Signal name="abs_active" offset="30" length="1"/>
       <Signal name="tcs_active" offset="28" length="1"/>
       <Signal name="vdcs_active" offset="24" length="1"/>
-      <Signal name="vdcs_yaw_rate_valid" offset="40" length="12"/>
+      <Signal name="vdcs_yaw_rate_valid" offset="36" length="1"/>
       <Signal name="vehicle_dynamics_yaw_rate" offset="40" length="12" endianess="big">
          <Value type="signed" slope="0.0625" intercept="0" unit="deg/sec"/>
          <Notes>Yaw Rate</Notes>
