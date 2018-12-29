@@ -50,10 +50,18 @@ if __name__ == '__main__':
     run = False
 
     if configs['nbp_enable']:
+        if 'serial' in configs:
+            logging.warning('Starting Serial/Bluetooth NBP server')
+            mypynbp = PyNBP(device=configs['serial'], nbpqueue=nbpqueue, min_update_interval=0.05)
+
+        if 'ip' in configs:
+            logging.warning('Starting Wifi NBP server')
+            mypynbp = WifiPyNBP(ip=configs['ip'], port=int(configs['port']), nbpqueue=nbpqueue, min_update_interval=0.05)
+
         logging.warning('Starting nbp server')
-        mypynbp = PyNBP(device=configs['serial'], nbpqueue=nbpqueue, min_update_interval=0.05)
         mypynbp.daemon = True
         mypynbp.start()
+
 
     if configs['mqtt_enable']:
         logging.warning('Enabling MQTT output')

@@ -12,7 +12,9 @@ configs={
     'canbus': 'can0',
     'mqtt_enable': 0,
     'nbp_enable': 0,
-    'serial': '/dev/rfcomm0'
+    #'serial': '/dev/rfcomm0'
+    'ip': '192.168.4.1',
+    'port': 35000,
 }
 
 nbp_kpis = {

@@ -1,7 +1,7 @@
-can4python==0.2.1
-gpsd-py3==0.3.0
-paho-mqtt==1.4.0
+can4python>=0.2.1
+gpsd-py3>=0.3.0
+paho-mqtt>=1.4.0
 pkg-resources==0.0.0
-pyserial==3.4
-RPi.GPIO==0.6.3
-pynbp
+pyserial>=3.4
+RPi.GPIO>=0.6.3
+pynbp>=0.0.8
