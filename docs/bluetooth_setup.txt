@@ -1,0 +1,13 @@
+https://www.reddit.com/r/raspberry_pi/comments/6nchaj/guide_how_to_establish_bluetooth_serial/
+
+sudo bluetoothctl
+power on
+discoverable on
+pairable on
+scan on
+
+pair <bdaddr>
+
+
+
+
