@@ -14,5 +14,5 @@ export mqtt_enable=1
 #Enable nbp output
 export nbp_enable=1
 #export serial=/dev/rfcomm0
-export ip=192.168.4.1
+export ip=`hostname -I`
 export port=35000
