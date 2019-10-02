@@ -4,3 +4,4 @@ I use Ethernet for connecting to the server - and Wifi in car for data realtime 
 
 https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md
 
+Enabling masquerade is up to you - if there is no internet connection on the pi - then don't. Nothing to forward.

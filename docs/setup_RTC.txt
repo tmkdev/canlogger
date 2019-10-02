@@ -1,0 +1,4 @@
+Using an RTC instead of GPS. Useful for NBP only configs:
+
+https://cdn-learn.adafruit.com/downloads/pdf/adding-a-real-time-clock-to-raspberry-pi.pdf 
+

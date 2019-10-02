@@ -2,3 +2,6 @@ Set the canogger to load on boot:
 
 @reboot /bin/bash /home/pi/canlogger/canlogger.sh > /home/pi/canlogger.log 2>&1 &
 
+# For stand alone NPB - No GPS and an active RTC. 
+
+@reboot /bin/bash /home/pi/canlogger/nbp_only.sh /home/pi/canlogger/nbp_only_env.sh > /home/pi/canlogger.log 2>&1 &
