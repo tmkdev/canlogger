@@ -7,7 +7,12 @@ cd ${scriptpath}
 
 which python3
 
-python3 ${scriptpath}/gpio_check.py || exit 1
+python3 ${scriptpath}/gpio_check.py
+if [ $? -eq 1 ]; then
+  echo "GPIO not set - exiting script and not shutting down."
+  exit 1
+fi
+
 mkdir -p ${logdir}
 
 export timestamp=`date +%Y%m%d%H%M%S`

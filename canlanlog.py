@@ -49,7 +49,7 @@ if __name__ == '__main__':
     state = None
     run = False
 
-    if configs['nbp_enable']:
+    if configs['nbp_enable'] == '1':
         if 'serial' in configs:
             logging.warning('Starting Serial/Bluetooth NBP server')
             mypynbp = PyNBP(device=configs['serial'], nbpqueue=nbpqueue, min_update_interval=0.05)
@@ -63,7 +63,7 @@ if __name__ == '__main__':
         mypynbp.start()
 
 
-    if configs['mqtt_enable']:
+    if configs['mqtt_enable'] == '1':
         logging.warning('Enabling MQTT output')
         t = threading.Thread(target=send_mqtt, args=(mqttqueue, ),  daemon=True)
         t.start()
