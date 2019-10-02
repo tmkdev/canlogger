@@ -7,7 +7,7 @@ configs={
     'configpath': '~/canlogger/configs',
     'logdir': '~/logs',
     'poweroff_timer': 10,
-    'nocan_timeout': 30,
+    'nocan_timeout': 69,
     'kcd': '~/canlogger/configs/gm_global_a_hs.kcd',
     'canbus': 'can0',
     'mqtt_enable': 0,
@@ -30,6 +30,7 @@ nbp_kpis = {
     'boost_pressure_indication': '%',
     'platform_brake_position': '%',
     'engine_speed': 'RPM',
+    'speed_average_driven_valid': 'km/h'
     }
 
 transmission_gear_map = {
