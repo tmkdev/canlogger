@@ -13,4 +13,5 @@ export mqtt_enable=0
 
 #Enable nbp output
 export nbp_enable=1
-export serial=/dev/rfcomm0
+#export serial=/dev/rfcomm0
+export ip=`hostname -I | tr -d '[:space:]'`
