@@ -1,0 +1,93 @@
+https://www.raspberrypi.org/forums/viewtopic.php?p=919420#p919420
+
+https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=125922
+
+Re: Bluetooth issues
+Quote
+Thu Mar 03, 2016 9:31 pm
+
+You'll first need to setup the SPP on the Pi. Edit this file:
+Code: Select all
+
+sudo nano /etc/systemd/system/dbus-org.bluez.service 
+Add ' -C' at the end of the 'ExecStart=' line, to start the bluetooth daemon in 'compatibility' mode. Add a new 'ExecStartPost=' immediately after that line, to add the SP Profile. The two lines should look like this:
+Code: Select all
+
+ExecStart=/usr/lib/bluetooth/bluetoothd -C
+ExecStartPost=/usr/bin/sdptool add SP
+Save and reboot.
+In a terminal on the Pi, run this command
+Code: Select all
+
+sudo rfcomm watch hci0
+Back on the phone use the terminal app to connect with the Pi. This will create a serial device on the Pi, /dev/rfcomm0. You can read and write to that device with minicom, picocom, PySerial or other.
+
+
+[bluetooth]# power on
+Changing power on succeeded
+[bluetooth]# discoverable on
+Changing discoverable on succeeded
+[CHG] Controller B8:27:EB:34:7D:00 Discoverable: yes
+[bluetooth]# agent on
+Agent registered
+[bluetooth]#  default-agent
+Default agent request successful
+[bluetooth]#  pairable on
+Changing pairable on succeeded
+[bluetooth]#  scan on
+Discovery started
+[CHG] Controller B8:27:EB:34:7D:00 Discovering: yes
+[NEW] Device 10:CD:B6:02:8D:D6 Essential Phone
+Request confirmation
+[agent] Confirm passkey 377759 (yes/no): yes
+[NEW] Device 68:FF:39:4C:AE:AA 68-FF-39-4C-AE-AA
+[CHG] Device 10:CD:B6:02:8D:D6 Modalias: bluetooth:v00E0p1200d1436
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001105-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 0000110a-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 0000110c-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 0000110e-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001112-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001115-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001116-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 0000111f-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 0000112d-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 0000112f-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001132-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001200-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001800-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001801-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 00001802-0000-1000-8000-00805f9b34fb
+[CHG] Device 10:CD:B6:02:8D:D6 UUIDs: 936da01f-9abd-4d9d-80c7-02af85c822a8
+[CHG] Device 10:CD:B6:02:8D:D6 ServicesResolved: yes
+
+
+
+Re: Bluetooth issues
+Quote
+Thu Mar 03, 2016 10:38 pm
+
+You can automate the rfcomm command with a service unit. Create a new file with sudo
+Code: Select all
+
+sudo nano /etc/systemd/system/rfcomm.service
+and enter the following
+Code: Select all
+
+[Unit]
+Description=RFCOMM service
+After=bluetooth.service
+Requires=bluetooth.service
+ 
+[Service]
+ExecStart=/usr/bin/rfcomm watch hci0
+ 
+[Install]
+WantedBy=multi-user.target
+Enable that to start at boot time with
+Code: Select all
+
+sudo systemctl enable rfcomm
+Now either reboot or start it manually with
+Code: Select all
+
+sudo systemctl start rfcomm

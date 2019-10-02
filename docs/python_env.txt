@@ -1,3 +1,12 @@
 Install python3 from APT
 
-sudp apt-get install python3 python3-venv python3-pip
+sudo apt-get install python3 python3-venv python3-pip
+
+create ENV
+python3 -m venv /home/pi/candy
+
+pi@can_nbp:~ $ . candy/bin/activate
+(candy) pi@can_nbp:~ $
+
+(candy) pi@can_nbp:~ $ cd canlogger/
+(candy) pi@can_nbp:~/canlogger $ pip install -r requirements.txt
